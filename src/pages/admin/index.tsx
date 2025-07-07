@@ -594,13 +594,13 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
     switch (selectedPlatform) {
       case "linux":
         finalCommand =
-          `bash <(curl -sL https://raw.githubusercontent.com/komari-monitor/komari-agent/refs/heads/main/install.sh) ` +
+          `bash <(curl -sL https://raw.githubusercontent.com/lizkes/komari-agent/refs/heads/main/install.sh) ` +
           args.join(" ");
         break;
       case "windows":
         finalCommand =
           `powershell.exe -NoProfile -ExecutionPolicy Bypass -Command ` +
-          `"iwr 'https://raw.githubusercontent.com/komari-monitor/komari-agent/refs/heads/main/install.ps1'` +
+          `"iwr 'https://raw.githubusercontent.com/lizkes/komari-agent/refs/heads/main/install.ps1'` +
           ` -UseBasicParsing -OutFile 'install.ps1'; &` +
           ` '.\\install.ps1'`;
         args.forEach((arg) => {

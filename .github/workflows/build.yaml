@@ -2,7 +2,7 @@ name: Build and Release Assets
 
 on:
   release:
-    types: [created] # 仅在创建新的 Release 时触发
+    types: [published]
 
 jobs:
   build_and_upload: # 合并了构建和上传的作业
@@ -17,14 +17,14 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: "22"
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
         run: npm run build
-        
+
       - name: Archive build artifacts
         run: |
           cd dist
