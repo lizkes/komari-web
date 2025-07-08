@@ -15,18 +15,6 @@ const NavBar = () => {
         <Link to="/">
           <label className="text-3xl font-bold ">{publicInfo?.sitename}</label>
         </Link>
-        <div className="hidden flex-row items-end md:flex">
-          <div
-            style={{ color: "var(--accent-3)" }}
-            className="border-solid border-r-2 mr-1 mb-1 w-2 h-2/3"
-          />
-          <label
-            className="text-base font-bold"
-            style={{ color: "var(--accent-4)" }}
-          >
-            Komari Monitor
-          </label>
-        </div>
       </div>
 
       <IconButton
