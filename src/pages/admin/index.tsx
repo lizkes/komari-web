@@ -634,7 +634,7 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
       </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Title>
-          {t("admin.nodeTable.installCommand", "一键部署指令")}
+          {t("admin.nodeTable.installCommand", "一键部署指令")} - {node.name}
         </Dialog.Title>
         <div className="flex flex-col gap-4">
           <SegmentedControl.Root
