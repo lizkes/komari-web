@@ -50,6 +50,14 @@ export default function SiteSettings() {
           await updateSettingsWithToast({ allow_cors: checked }, t);
         }}
       />
+      <SettingCardShortTextInput
+        title={t("settings.site.custom_endpoint", "自定义上报域名")}
+        description={t("settings.site.custom_endpoint_description", "设置客户端上报数据使用的域名，留空则使用当前域名")}
+        defaultValue={settings.custom_endpoint || ""}
+        OnSave={async (data) => {
+          await updateSettingsWithToast({ custom_endpoint: data }, t);
+        }}
+      />
       <SettingCardLabel>{t("settings.site.custom")}</SettingCardLabel>
       <label className="text-sm text-muted-foreground -mt-4">
         {t("settings.custom.note", "个性化内容在使用自定义主题时可能会被覆盖。请确保代码的安全性，避免使用不受信任的内容。")}

@@ -67,6 +67,7 @@ import { formatBytes } from "@/types/NodeBasicInfo";
 import PriceTags from "@/components/PriceTags";
 import Loading from "@/components/loading";
 import Tips from "@/components/ui/tips";
+import { useSettings } from "@/lib/api";
 
 const NodeDetailsPage = () => {
   return (
@@ -524,11 +525,11 @@ type InstallOptions = {
   serviceName: string;
   includeNics: string;
   excludeNics: string;
-  customEndpoint: string;
 };
 function GenerateCommandButton({ node }: { node: NodeDetail }) {
   const [selectedPlatform, setSelectedPlatform] =
     React.useState<Platform>("linux");
+  const { settings } = useSettings();
   const [installOptions, setInstallOptions] = React.useState<InstallOptions>({
     disableWebSsh: false,
     disableAutoUpdate: false,
@@ -539,7 +540,6 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
     serviceName: "",
     includeNics: "",
     excludeNics: "",
-    customEndpoint: "",
   });
 
   const [enableGhproxy, setEnableGhproxy] = React.useState(false);
@@ -548,11 +548,10 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
     React.useState(false);
   const [enableIncludeNics, setEnableIncludeNics] = React.useState(false);
   const [enableExcludeNics, setEnableExcludeNics] = React.useState(false);
-  const [enableCustomEndpoint, setEnableCustomEndpoint] = React.useState(false);
-
   const generateCommand = () => {
-    const host = (enableCustomEndpoint && installOptions.customEndpoint.trim()) 
-      ? installOptions.customEndpoint.trim().replace(/\/+$/, "") 
+    // 使用配置的自定义域名，如果为空则使用当前域名
+    const host = (settings?.custom_endpoint && settings.custom_endpoint.trim()) 
+      ? settings.custom_endpoint.trim().replace(/\/+$/, "") 
       : window.location.origin;
     const token = node.token || "";
     let args = ["-e", host, "-t", token];
@@ -972,56 +971,7 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
                   }
                 />
               )}
-              <Flex gap="2" align="center">
-                <Checkbox
-                  checked={enableCustomEndpoint}
-                  onCheckedChange={(checked) => {
-                    setEnableCustomEndpoint(Boolean(checked));
-                    if (checked) {
-                      setInstallOptions((prev) => ({
-                        ...prev,
-                        customEndpoint: window.location.origin,
-                      }));
-                    } else {
-                      setInstallOptions((prev) => ({
-                        ...prev,
-                        customEndpoint: "",
-                      }));
-                    }
-                  }}
-                />
-                <label
-                  className="text-sm font-bold cursor-pointer"
-                  onClick={() => {
-                    const newState = !enableCustomEndpoint;
-                    setEnableCustomEndpoint(newState);
-                    if (newState) {
-                      setInstallOptions((prev) => ({
-                        ...prev,
-                        customEndpoint: window.location.origin,
-                      }));
-                    } else {
-                      setInstallOptions((prev) => ({
-                        ...prev,
-                        customEndpoint: "",
-                      }));
-                    }
-                  }}
-                >
-                  {t("admin.nodeTable.customEndpoint", "自定义上报域名")}
-                </label>
-              </Flex>
-              {enableCustomEndpoint && (
-                <TextField.Root
-                  value={installOptions.customEndpoint}
-                  onChange={(e) =>
-                    setInstallOptions((prev) => ({
-                      ...prev,
-                      customEndpoint: e.target.value,
-                    }))
-                  }
-                />
-              )}
+
             </Flex>
           </Flex>
           <Flex direction="column" gap="2">
