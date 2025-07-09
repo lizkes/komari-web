@@ -520,6 +520,7 @@ type InstallOptions = {
   disableAutoUpdate: boolean;
   ignoreUnsafeCert: boolean;
   memoryModeAvailable: boolean;
+  enableDebugLog: boolean;  // 新增：启用调试日志
   ghproxy: string;
   dir: string;
   serviceName: string;
@@ -535,6 +536,7 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
     disableAutoUpdate: false,
     ignoreUnsafeCert: false,
     memoryModeAvailable: false,
+    enableDebugLog: false, // 默认不启用调试日志
     ghproxy: "",
     dir: "",
     serviceName: "",
@@ -592,6 +594,10 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
     if (enableExcludeNics && installOptions.excludeNics) {
       args.push(`--exclude-nics`);
       args.push(installOptions.excludeNics);
+    }
+    if (installOptions.enableDebugLog) {
+      args.push(`--log-level`);
+      args.push("debug");
     }
 
     let finalCommand = "";
@@ -744,6 +750,32 @@ function GenerateCommandButton({ node }: { node: NodeDetail }) {
                 </Tips>
               </Flex>
             </div>
+            
+              <Flex gap="2" align="center">
+                <Checkbox
+                  checked={installOptions.enableDebugLog}
+                  onCheckedChange={(checked) => {
+                    setInstallOptions((prev) => ({
+                      ...prev,
+                      enableDebugLog: Boolean(checked),
+                    }));
+                  }}
+                />
+                <label
+                  className="text-sm font-normal"
+                  onClick={() => {
+                    setInstallOptions((prev) => ({
+                      ...prev,
+                      enableDebugLog: !prev.enableDebugLog,
+                    }));
+                  }}
+                >
+                  {t("admin.nodeTable.enableDebugLog", "启用调试日志")}
+                </label>
+                <Tips size="14">
+                  {t("admin.nodeTable.enableDebugLog_tip", "启用后将输出详细的网络和连接诊断信息，用于分析连接问题")}
+                </Tips>
+              </Flex>
             <Flex direction="column" gap="2">
               <Flex gap="2" align="center">
                 <Checkbox

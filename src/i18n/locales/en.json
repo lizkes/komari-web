@@ -310,7 +310,9 @@
       "memoryModeAvailable": "Monitor available memory",
       "memoryModeAvailable_tip": "The Agent monitors and reports used memory by default. Selecting this option will monitor and report available memory.",
       "includeNics": "Specific network interfaces only.",
-      "excludeNics": "Exclude specific network interfaces."
+      "excludeNics": "Exclude specific network interfaces.",
+      "enableDebugLog": "Enable debug logging",
+      "enableDebugLog_tip": "When enabled, will output detailed network and connection diagnostic information for analyzing connectivity issues"
     },
     "nodeDetail": {
       "arch": "Architecture",

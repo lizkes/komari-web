@@ -310,7 +310,9 @@
       "memoryModeAvailable": "监测可用内存",
       "memoryModeAvailable_tip": "Agent 默认监测并上报已用内存，勾选此选项将监测并上报可用内存。",
       "includeNics": "只监测特定网卡",
-      "excludeNics": "排除特定网卡"
+      "excludeNics": "排除特定网卡",
+      "enableDebugLog": "启用调试日志",
+      "enableDebugLog_tip": "启用后将输出详细的网络和连接诊断信息，用于分析连接问题"
     },
     "nodeDetail": {
       "machineDetail": "机器详细信息",
